@@ -45,6 +45,14 @@ config FREETZ_AVM_HAS_NMI_VECTOR
 		  - http://www.ip-phone-forum.de/showthread.php?t=286318
 		for more information.
 
+config FREETZ_AVM_IMAGES_SUBDIR
+	string "Sub-dir containing image files"	if FREETZ_TYPE_CUSTOM
+	default "var/tmp"			if FREETZ_TARGET_ARCH_MIPS
+	default "var/remote/var/tmp/x86"	if FREETZ_TARGET_ARCH_X86
+	help
+		A sub-directory within the .image tarball containing the files
+		like: kernel.image, filesystem.image, plugins.update, etc.
+
 config FREETZ_AVM_HAS_SEPARATE_FILESYSTEM_IMAGE
 	bool "Has separate filesystem image"	if FREETZ_TYPE_CUSTOM
 	default y		if \
@@ -87,21 +95,5 @@ config FREETZ_AVM_OUTER_FILESYSTEM_TYPE
 	string "Outer-filesystem type"		if FREETZ_TYPE_CUSTOM
 	default "Ext2FS"			if FREETZ_AVM_VERSION_06_5X_MIN && FREETZ_KERNEL_VERSION_3_10
 	default "SquashFS"
-
-config FREETZ_AVM_KERNEL_IMAGE
-	string "Name and path of kernel.image file"		if FREETZ_TYPE_CUSTOM
-	default "var/remote/var/tmp/x86/kernel.image"		if FREETZ_TYPE_6490
-	default "var/tmp/kernel.image"
-	help
-		Name and path of kernel.image file within the AVM
-		firmware archive
-
-config FREETZ_AVM_FILESYSTEM_IMAGE
-	string "Name and path of filesystem.image file"		if FREETZ_TYPE_CUSTOM
-	default "var/remote/var/tmp/x86/filesystem.image"	if FREETZ_TYPE_6490
-	default "var/tmp/filesystem.image"
-	help
-		Name and path of filesystem.image file within the
-		AVM firmware archive
 
 endmenu

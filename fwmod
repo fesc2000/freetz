@@ -136,8 +136,7 @@ VARTAR_SUBDIR="var.tar"
 HTML_SUBDIR="usr/www"
 GRAPHICS_SUBDIR="graphics"
 
-# More files created during firmware unpacking
-AVMPLUGINS_FILE="var/tmp/plugins.update"
+# (temporary) files created during firmware unpacking
 RAW_KERNEL_FILE="kernel.raw"
 RAW_HIDDEN_FILE="kernelsquashfs.raw"
 VARTAR_FILE="var.tar"
@@ -215,6 +214,12 @@ rm "$DOT_CONFIG.fwmod"
 # user-defined and minimal) config file
 : ${FREETZ_VERBOSITY_LEVEL:=0}
 
+# Kernel/SquashFS images contained in firmware
+KERNEL_IMAGE="${FREETZ_AVM_IMAGES_SUBDIR}/kernel.image"
+FILESYSTEM_IMAGE="${FREETZ_AVM_IMAGES_SUBDIR}/filesystem.image"
+FILESYSTEM_INNER_IMAGE="filesystem_core.squashfs"
+AVMPLUGINS_FILE="${FREETZ_AVM_IMAGES_SUBDIR}/plugins.update"
+
 # Use FREETZ_TARGET_CROSS to determine build tool paths
 NM="${ABS_BASE_DIR}/toolchain/target/bin/${FREETZ_TARGET_CROSS}nm"
 STRIP="${ABS_BASE_DIR}/toolchain/target/bin/${FREETZ_TARGET_CROSS}strip"
@@ -257,11 +262,6 @@ fi
 if [ "${FREETZ_SQUASHFS_VERSION}" -eq 3 -a "${FREETZ_AVM_SQUASHFS_COMPRESSION}" == "lzma" ]; then
 	MKSQUASHFS_OPTIONS+=" -lzma1"
 fi
-
-# Kernel/SquashFS images contained in firmware
-KERNEL_IMAGE="${FREETZ_AVM_KERNEL_IMAGE}"
-FILESYSTEM_IMAGE="${FREETZ_AVM_FILESYSTEM_IMAGE}"
-FILESYSTEM_INNER_IMAGE="filesystem_core.squashfs"
 
 #######################################
 ## Initialise fakeroot incl. caching ##
@@ -384,7 +384,7 @@ if [ "$DO_UNPACK" -gt 0 ]; then
 		# Unpack Windows recover.exe file or mtdblock dump
 		exe_images=($("${TOOLS_DIR}/extract-images" "$ABS_BASE_DIR" "$FIRMWARE" | sed -nr 's/^ *(.*\.image) - .*/\1/p'))
 		[ "$exe_images" ] || exit 1
-		mkdir -p "$FIRMWARE_DIR/var/tmp"
+		mkdir -p "$FIRMWARE_DIR/${FREETZ_AVM_IMAGES_SUBDIR}"
 		mkdir "$KERNEL_DIR"
 		unset exe_hr_mode
 		# NOTE: This loop is sensitive to the order and format of output of
@@ -394,22 +394,22 @@ if [ "$DO_UNPACK" -gt 0 ]; then
 			exe_image="${exe_images[i]}"
 			case "$exe_image" in
 				*/urlader.image)
-					mv "$exe_image" "$FIRMWARE_DIR/var/tmp"
+					mv "$exe_image" "$FIRMWARE_DIR/${FREETZ_AVM_IMAGES_SUBDIR}"
 					;;
 				*/hr_kernel.image)
 					exe_hr_mode=1
-					mv "$exe_image" "$FIRMWARE_DIR/var/tmp/kernel.image"
-					touch "$FIRMWARE_DIR/var/tmp/filesystem.image"
+					mv "$exe_image" "$FIRMWARE_DIR/${FREETZ_AVM_IMAGES_SUBDIR}/kernel.image"
+					touch "$FIRMWARE_DIR/${FREETZ_AVM_IMAGES_SUBDIR}/filesystem.image"
 					;;
 				*/kernel.image)
-					[ "$exe_hr_mode" ] || cp "$exe_image" "$FIRMWARE_DIR/var/tmp/kernel.image"
+					[ "$exe_hr_mode" ] || cp "$exe_image" "$FIRMWARE_DIR/${FREETZ_AVM_IMAGES_SUBDIR}/kernel.image"
 					mv "$exe_image" "$KERNEL_DIR/kernel.raw"
 					;;
 				*/filesystem.image)
 					if [ "$exe_hr_mode" ]; then
 						mv "$exe_image" "$KERNEL_DIR/kernelsquashfs.raw"
 					else
-						mv "$exe_image" "$FIRMWARE_DIR/var/tmp/filesystem.image"
+						mv "$exe_image" "$FIRMWARE_DIR/${FREETZ_AVM_IMAGES_SUBDIR}/filesystem.image"
 					fi
 					;;
 			esac
@@ -419,7 +419,7 @@ if [ "$DO_UNPACK" -gt 0 ]; then
 
 	# Do the images exist ?
 	[ ! -r "${KERNEL}" ] && error 1 "cannot find kernel.image (${KERNEL})"
-	[ ! -r "${FIRMWARE_DIR}/${FILESYSTEM_IMAGE}" ] && error 1 "cannot find filesystem.image (${FILESYSTEM})"
+	[ ! -r "${FIRMWARE_DIR}/${FILESYSTEM_IMAGE}" ] && error 1 "cannot find filesystem.image (${FIRMWARE_DIR}/${FILESYSTEM_IMAGE})"
 
 	# Do we have the tool ?
 	for tool in "$UNSQUASHFS" "$FINDSQUASHFS" "$TICHKSUM"; do
@@ -1754,7 +1754,7 @@ if [ "$DO_PACK" -gt 0 ]; then
 
 	# Create in-memory image
 	img_name="${FW_IMAGES_DIR:-$DIR}/${modimage}"
-	if [ "${FREETZ_FWMOD_CREATE_IN-MEMORY}" == "y" ]; then
+	if [ "${FREETZ_FWMOD_CREATE_IN_MEMORY_IMAGE}" == "y" ]; then
 		echo0 "creating in-memory image ${img_name}.in-memory"
 		{
 			cat "$KERNEL_MOD"     | dd bs=256 conv=sync 2>/dev/null;
