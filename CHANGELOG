@@ -99,7 +99,7 @@ Latest changes:
     * dropbear 2016.75
     * e2fsprogs 1.42.13
     * espeak 1.48.04
-    * expat 2.2.4
+    * expat 2.2.5
     * ffmpeg 1.2.12
     * freetype 2.5.5
     * fuse 2.9.7
@@ -156,7 +156,7 @@ Latest changes:
     * obexftp 0.23
     * openconnect 7.04
     * openssh 7.6p1
-    * openssl 0.9.8zh/1.0.2l
+    * openssl 0.9.8zh/1.0.2m
     * openvpn 2.3.18/2.4.4
     * pcre 8.41
     * pcscd 1.8.12
@@ -204,7 +204,7 @@ Latest changes:
     * vim 7.4.663
     * vnstat 1.17
     * vsftpd 3.0.3
-    * wget 1.19.1
+    * wget 1.19.2
     * xpdf 3.04
     * Zabbix 2.4.6
     * zlib 1.2.11
