@@ -15,6 +15,7 @@ eva2lzma
 eva_tools
 genext2fs
 gunzip
+lunzip
 lzcat
 lzma
 lzma2eva

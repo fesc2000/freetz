@@ -401,7 +401,8 @@ config FREETZ_BUSYBOX_NOMMU
 config FREETZ_BUSYBOX_BUILD_LIBBUSYBOX
 	bool "Build shared libbusybox"
 	default n
-	depends on !FREETZ_BUSYBOX_FEATURE_PREFER_APPLETS && !FREETZ_BUSYBOX_PIE && !FREETZ_BUSYBOX_STATIC && FREETZ_DISABLE_OPTION_BY_MAKING_IT_DEPEND_ON_NONEXISTING_SYMBOL
+	depends on !FREETZ_BUSYBOX_FEATURE_PREFER_APPLETS && !FREETZ_BUSYBOX_PIE && !FREETZ_BUSYBOX_STATIC
+	depends on FREETZ_DISABLE_OPTION_BY_MAKING_IT_DEPEND_ON_NONEXISTING_SYMBOL
 	help
 	  Build a shared library libbusybox.so.N.N.N which contains all
 	  busybox code.
@@ -1149,6 +1150,10 @@ config FREETZ_BUSYBOX_FEATURE_SEAMLESS_GZ
 	bool "Make tar, rpm, modprobe etc understand .gz data"
 	default n
 
+config FREETZ_BUSYBOX_FEATURE_SEAMLESS_LZ
+	bool "Make tar, rpm, modprobe etc understand .lz data"
+	default n
+
 config FREETZ_BUSYBOX_FEATURE_SEAMLESS_Z
 	bool "Make tar, rpm, modprobe etc understand .Z data"
 	default n  # it is ancient
@@ -1228,6 +1233,13 @@ config FREETZ_BUSYBOX_BZCAT
 	select FREETZ_BUSYBOX_FEATURE_BZIP2_DECOMPRESS
 	help
 	  Alias to "bunzip2 -c".
+config FREETZ_BUSYBOX_LUNZIP
+	bool "lunzip"
+	default n
+	help
+	  lunzip is used to decompress archives created by lzip.
+	  You can use the '-t' option to test the integrity of an archive,
+	  without decompressing it.
 config FREETZ_BUSYBOX_UNLZMA
 	bool "unlzma"
 	default n
@@ -1397,6 +1409,15 @@ config FREETZ_BUSYBOX_FEATURE_GZIP_DECOMPRESS
 	  Enable -d (--decompress) and -t (--test) options for gzip.
 	  This will be automatically selected if gunzip or zcat is
 	  enabled.
+config FREETZ_BUSYBOX_LZIP
+	bool "lzip"
+	default n
+	help
+	  lzip is a lossless data compressor with a user interface similar to
+	  the one of gzip or bzip2. lzip can compress about as fast as gzip or
+	  compress most files more than bzip2 (depending on compression level).
+	  Decompression speed is intermediate between gzip and bzip2. lzip is
+	  better than gzip and bzip2 from a data recovery perspective.
 config FREETZ_BUSYBOX_LZOP
 	bool "lzop"
 	default n
@@ -1454,7 +1475,7 @@ config FREETZ_BUSYBOX_FEATURE_TAR_CREATE
 config FREETZ_BUSYBOX_FEATURE_TAR_AUTODETECT
 	bool "Autodetect compressed tarballs"
 	default n
-	depends on FREETZ_BUSYBOX_TAR && (FREETZ_BUSYBOX_FEATURE_SEAMLESS_Z || FREETZ_BUSYBOX_FEATURE_SEAMLESS_GZ || FREETZ_BUSYBOX_FEATURE_SEAMLESS_BZ2 || FREETZ_BUSYBOX_FEATURE_SEAMLESS_LZMA || FREETZ_BUSYBOX_FEATURE_SEAMLESS_XZ)
+	depends on FREETZ_BUSYBOX_TAR && (FREETZ_BUSYBOX_FEATURE_SEAMLESS_Z || FREETZ_BUSYBOX_FEATURE_SEAMLESS_GZ || FREETZ_BUSYBOX_FEATURE_SEAMLESS_BZ2 || FREETZ_BUSYBOX_FEATURE_SEAMLESS_LZ || FREETZ_BUSYBOX_FEATURE_SEAMLESS_LZMA || FREETZ_BUSYBOX_FEATURE_SEAMLESS_XZ)
 	help
 	  With this option tar can automatically detect compressed
 	  tarballs. Currently it works only on files (not pipes etc).
@@ -8300,7 +8321,8 @@ config FREETZ_BUSYBOX_FEATURE_SH_EXTRA_QUIET
 config FREETZ_BUSYBOX_FEATURE_SH_STANDALONE
 	bool "Standalone shell"
 	default n
-	depends on FREETZ_BUSYBOX_ASH || FREETZ_BUSYBOX_HUSH || FREETZ_BUSYBOX_SH_IS_ASH || FREETZ_BUSYBOX_BASH_IS_ASH || FREETZ_BUSYBOX_SH_IS_HUSH || FREETZ_BUSYBOX_BASH_IS_HUSH && FREETZ_BUSYBOX__NOEXEC_NOFORK_OPTIMIZATIONS
+	depends on FREETZ_BUSYBOX_ASH || FREETZ_BUSYBOX_HUSH || FREETZ_BUSYBOX_SH_IS_ASH || FREETZ_BUSYBOX_BASH_IS_ASH || FREETZ_BUSYBOX_SH_IS_HUSH || FREETZ_BUSYBOX_BASH_IS_HUSH
+	depends on FREETZ_BUSYBOX__NOEXEC_NOFORK_OPTIMIZATIONS
 	help
 	  This option causes busybox shells to use busybox applets
 	  in preference to executables in the PATH whenever possible. For
@@ -8321,7 +8343,8 @@ config FREETZ_BUSYBOX_FEATURE_SH_STANDALONE
 config FREETZ_BUSYBOX_FEATURE_SH_NOFORK
 	bool "Run 'nofork' applets directly"
 	default n
-	depends on FREETZ_BUSYBOX_ASH || FREETZ_BUSYBOX_HUSH || FREETZ_BUSYBOX_SH_IS_ASH || FREETZ_BUSYBOX_BASH_IS_ASH || FREETZ_BUSYBOX_SH_IS_HUSH || FREETZ_BUSYBOX_BASH_IS_HUSH && FREETZ_BUSYBOX__NOEXEC_NOFORK_OPTIMIZATIONS
+	depends on FREETZ_BUSYBOX_ASH || FREETZ_BUSYBOX_HUSH || FREETZ_BUSYBOX_SH_IS_ASH || FREETZ_BUSYBOX_BASH_IS_ASH || FREETZ_BUSYBOX_SH_IS_HUSH || FREETZ_BUSYBOX_BASH_IS_HUSH
+	depends on FREETZ_BUSYBOX__NOEXEC_NOFORK_OPTIMIZATIONS
 	help
 	  This option causes busybox shells to not execute typical
 	  fork/exec/wait sequence, but call <applet>_main directly,
