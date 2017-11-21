@@ -77,7 +77,11 @@ config FREETZ_AVM_HAS_MYFRITZ
 
 config FREETZ_AVM_HAS_MULTI_ANNEX
 	bool "Multi-Annex (single firmware image)"	if FREETZ_TYPE_CUSTOM
-	default y		if FREETZ_AVM_VERSION_05_2X_MIN && !FREETZ_TYPE_6490
+	default y		if FREETZ_AVM_VERSION_05_2X_MIN && \
+		! ( \
+			FREETZ_TYPE_6490 || \
+			FREETZ_TYPE_6590 \
+		)
 	default n
 	help
 		Select this if the original firmware has Multi-Annex support,
@@ -610,6 +614,7 @@ config FREETZ_AVM_HAS_JFFS2_BUILTIN
 	bool "jffs2 support built into the kernel"	if FREETZ_TYPE_CUSTOM
 	default y	if \
 		FREETZ_TYPE_6490 || \
+		FREETZ_TYPE_6590 || \
 		FREETZ_TYPE_7312 || \
 		FREETZ_TYPE_7320 || \
 		FREETZ_TYPE_7330
@@ -619,7 +624,7 @@ config FREETZ_AVM_HAS_JFFS2_BUILTIN
 
 config FREETZ_AVM_HAS_RAMZSWAP
 	bool "ramzswap.ko"	if FREETZ_TYPE_CUSTOM
-	default y		if FREETZ_AVM_VERSION_05_2X_MIN && !FREETZ_TYPE_6490
+	default y		if FREETZ_AVM_VERSION_05_2X_MIN && !FREETZ_KERNEL_LAYOUT_PUMA6
 	default n
 	help
 		Select this if the original firmware contains ramzswap.ko module.
