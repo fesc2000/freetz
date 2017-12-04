@@ -56,9 +56,11 @@ Latest changes:
     * libavmacl2 (taken from AVM's 7490.06.30 open-source package)
     * libcap 2.24
     * libgsm-1.0.13
+    * libmnl 1.0.4
     * libnettle 3.3
     * liblz4 1.7.5
     * libsrtp-1.4.4+20100615
+    * libssh2 1.8.0
     * libusb-compat 0.1.5
     * lzma1 4.65
     * mbed TLS 2.6.0
@@ -74,6 +76,7 @@ Latest changes:
     * spandsp 0.0.6pre21
     * squashfs-tools 3.4
     * squashfs-tools 4.3 (modified to support AVM-BE format)
+    * WireGuard 0.0.20171127
     * xz 5.2.3
 
 - Updated tools and hooks:
@@ -181,13 +184,13 @@ Latest changes:
     * sane-backends 1.0.27
     * screen 4.6.2
     * slang 2.3.1a
-    * smartmontools 6.5
+    * smartmontools 6.6
     * sqlite 3.21.0
     * sslh 1.18
     * strace 4.8
     * stunnel 5.43
     * subversion 1.8.19/1.9.7
-    * tinc 1.0.31/1.1pre14
+    * tinc 1.0.33/1.1pre15
     * tinyproxy 1.8.3
     * tmux 2.5
     * tor 0.3.0.11
@@ -204,12 +207,14 @@ Latest changes:
     * vim 7.4.663
     * vnstat 1.17
     * vsftpd 3.0.3
+    * vtun 3.0.4
     * wget 1.19.2
     * xpdf 3.04
     * Zabbix 2.4.6
     * zlib 1.2.11
 
 - Removed packages, libs, modules, tools:
+    * aiccu
     * cyassl
     * MatrixSSL/MatrixTunnel (outdated, unmaintained, probably unsafe)
     * openvpn 2.2.x
