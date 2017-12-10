@@ -107,7 +107,7 @@ Latest changes:
     * freetype 2.5.5
     * fuse 2.9.7
     * gdb 7.9.1
-    * git 2.15.0
+    * git 2.15.1
     * gmp 6.1.2
     * gnu-make 4.2.1
     * gnutls 3.5.12
@@ -146,7 +146,7 @@ Latest changes:
     * lsof 4.89
     * ltrace 0.7.91-git
     * lynx 2.8.8
-    * mc 4.8.19
+    * mc 4.8.20
     * minidlna 1.2.1
     * mpc 1.0.3
     * mpfr 3.1.6
@@ -159,7 +159,7 @@ Latest changes:
     * obexftp 0.23
     * openconnect 7.04
     * openssh 7.6p1
-    * openssl 0.9.8zh/1.0.2m
+    * openssl 0.9.8zh/1.0.2n
     * openvpn 2.3.18/2.4.4
     * pcre 8.41
     * pcscd 1.8.12
@@ -188,12 +188,12 @@ Latest changes:
     * sqlite 3.21.0
     * sslh 1.18
     * strace 4.8
-    * stunnel 5.43
+    * stunnel 5.44
     * subversion 1.8.19/1.9.7
     * tinc 1.0.33/1.1pre15
     * tinyproxy 1.8.3
     * tmux 2.5
-    * tor 0.3.0.11
+    * tor 0.3.0.13
     * transmission 2.92
     * tree 1.7.0
     * truecrypt 7.2
