@@ -62,6 +62,7 @@ source make/netpbm/external.in.libs
 source make/libs/nettle/external.in
 source make/ntfs/external.in.libs
 source make/libs/libogg/external.in
+source make/libs/libonig/external.in
 source make/libs/openjpeg/external.in
 source make/libs/openobex/external.in
 source make/libs/liboping/external.in
@@ -96,7 +97,6 @@ source make/libs/libusb/external.in
 source make/libs/libusb1/external.in
 source make/libs/uclibcxx/external.in
 source make/libs/libvorbis/external.in
-source make/libs/wxWidgets/external.in
 source make/libs/libxml2/external.in
 source make/xsltproc/external.in.libs
 source make/libs/zlib/external.in
