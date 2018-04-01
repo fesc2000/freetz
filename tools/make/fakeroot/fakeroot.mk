@@ -38,6 +38,7 @@ $(FAKEROOT_MAINARCH_DIR)/.configured: $(FAKEROOT_DIR)/.unpacked
 		CC="$(TOOLS_CC)" \
 		../../configure \
 		--prefix=$(FAKEROOT_DESTDIR) \
+		--with-ipc=tcp\
 		--enable-shared \
 		$(DISABLE_NLS) \
 	);
@@ -53,6 +54,7 @@ $(FAKEROOT_BIARCH_DIR)/.configured: $(FAKEROOT_DIR)/.unpacked
 		CC="$(TOOLS_CC)" \
 		../../configure \
 		--prefix=$(FAKEROOT_DESTDIR) \
+		--with-ipc=tcp\
 		--enable-shared \
 		$(DISABLE_NLS) \
 	);
